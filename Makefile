@@ -10,4 +10,4 @@ get.o:
 all:
 	${CC} -o get get.c -lncurses
 clean:
-	rm -rfv get get.o
+	rm -f get get.o
