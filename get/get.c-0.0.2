@@ -1,0 +1,68 @@
+/* Written by Jeremy N. Surma  Oct 2019
+   Just playing with ncurses to implement a conio.h type getch()
+   in linux.  Doesn't do anything usefull, just testing.
+*/
+#include <ncurses.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+/*
+#define WIDTH 60
+#define HEIGHT 30
+*/
+
+int startx = 0;
+int starty = 0;
+int ch = 0;
+int i = 0;
+
+void delay(float sec){
+  int m_sec = CLOCKS_PER_SEC * sec;
+  clock_t start_time = clock();
+  while (clock() < start_time + m_sec){
+    ;
+  }
+}
+
+int main(void){
+  WINDOW *win;
+  initscr();
+  const int WIDTH = COLS - 20;
+  const int HEIGHT = LINES - 10;
+  clear();
+  cbreak();
+  startx = (COLS - WIDTH) / 2;
+  starty = (LINES - HEIGHT) / 2;
+  noecho();
+
+  win = newwin(HEIGHT, WIDTH, starty, startx);
+  keypad(win, TRUE);
+  box(win, 0, 0);
+  
+  nodelay(win, TRUE);
+
+  mvwprintw(win, ((HEIGHT/2)-6), ((WIDTH-20)/2), "Screen size %d x %d", COLS, LINES);
+  while ((ch = wgetch(win)) == ERR && i <= 30){
+    mvwprintw(win, ((HEIGHT/2)-4), ((WIDTH-20)/2), "Window size %d x %d", WIDTH, HEIGHT);
+    mvwprintw(win, ((HEIGHT/2)-2), ((WIDTH-12)/2), "No Input. %d", i);
+    wrefresh(win);
+    i++;
+    delay(1);
+  }
+
+  if (ch == ERR){
+    mvwprintw(win, (HEIGHT/2), ((WIDTH-20)/2), "No Character Input.");
+    wrefresh(win);
+  }
+  else{
+    mvwprintw(win, (HEIGHT/2), ((WIDTH-16)/2), "Character Input.");
+    wrefresh(win);
+  }
+mvwprintw(win, ((HEIGHT/2)+6), ((WIDTH-14)/2), "Press any key.");
+  while (wgetch(win) == ERR){
+} 
+
+  endwin();
+  return ch;
+}
