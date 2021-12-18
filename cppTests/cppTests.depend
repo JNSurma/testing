@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1639288484 source:/media/norb/src/test/cppTests/main.cpp
+	"functions.h"
+
+1639288464 /media/norb/src/test/cppTests/functions.h
+	<iostream>
+	<fstream>
+	<string>
+	<limits>
+	<typeinfo>
+	<exception>
+	<algorithm>
+
